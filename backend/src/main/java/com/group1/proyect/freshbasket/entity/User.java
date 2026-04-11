@@ -2,12 +2,14 @@ package com.group1.proyect.freshbasket.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
@@ -17,26 +19,36 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
     private Long id;
-
+    
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(max = 50)
     @Column(nullable = false, length = 50)
-    private String username;
+    private String name;
 
+    @NotBlank(message = "El apellido es obligatorio")
+    @Size(max = 50)
+    @Column(name = "last_name", nullable = false, length = 50)
+    private String lastName;
+
+    @NotBlank(message = "El email es obligatorio")
+    @Email
     @Column(nullable = false, length = 100, unique = true)
     private String email;
 
+    @NotBlank(message = "El telefono es obligatorio")
+    @Column(nullable = false, length = 20)
+    private String phone;
+
+    @NotBlank(message = "El password es obligatorio")
+    @JsonIgnore
     @Column(nullable = false)
-    private String password; // En un futuro real esto se encripta
+    private String password;
 
-    @Column(length = 20)
-    private String role;
-
-    // Relación 1:N: Un usuario hace muchas entradas
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonIgnore 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY) 
+    @JsonIgnore
     private List<Entry> entries = new ArrayList<>();
 
-    // Relación 1:N: Un usuario hace muchas salidas
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonIgnore 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY) 
+    @JsonIgnore
     private List<Exit> exits = new ArrayList<>();
 }
