@@ -2,13 +2,18 @@ package com.group1.proyect.freshbasket.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import lombok.*;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "exits")
 public class Exit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_exit")
     private Long id;
 
     @Column(nullable = false)
@@ -31,17 +36,4 @@ public class Exit {
     protected void onCreate() {
         exitDate = LocalDateTime.now();
     }
-
-    public Exit() {}
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public Integer getQuantity() { return quantity; }
-    public void setQuantity(Integer quantity) { this.quantity = quantity; }
-    public LocalDateTime getExitDate() { return exitDate; }
-    public void setExitDate(LocalDateTime exitDate) { this.exitDate = exitDate; }
-    public Product getProduct() { return product; }
-    public void setProduct(Product product) { this.product = product; }
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
 }

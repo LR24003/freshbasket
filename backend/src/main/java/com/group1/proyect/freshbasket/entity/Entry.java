@@ -1,14 +1,18 @@
 package com.group1.proyect.freshbasket.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 import java.time.LocalDateTime;
-
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "entries")
 public class Entry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_entry")
     private Long id;
 
     @Column(nullable = false)
@@ -36,19 +40,4 @@ public class Entry {
     protected void onCreate() {
         entryDate = LocalDateTime.now();
     }
-
-    public Entry() {}
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public Integer getQuantity() { return quantity; }
-    public void setQuantity(Integer quantity) { this.quantity = quantity; }
-    public LocalDateTime getEntryDate() { return entryDate; }
-    public void setEntryDate(LocalDateTime entryDate) { this.entryDate = entryDate; }
-    public Product getProduct() { return product; }
-    public void setProduct(Product product) { this.product = product; }
-    public Supplier getSupplier() { return supplier; }
-    public void setSupplier(Supplier supplier) { this.supplier = supplier; }
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
 }
