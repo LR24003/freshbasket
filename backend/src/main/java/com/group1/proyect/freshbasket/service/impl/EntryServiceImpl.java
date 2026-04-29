@@ -1,5 +1,5 @@
-package com.group1.proyect.freshbasket.service.impl;
-
+/*package com.group1.proyect.freshbasket.service.impl;
+/* 
 import com.group1.proyect.freshbasket.dto.request.EntryRequestDTO;
 import com.group1.proyect.freshbasket.dto.response.EntryResponseDTO;
 import com.group1.proyect.freshbasket.entity.Entry;
@@ -18,9 +18,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-@Service
-@Transactional
+*/
+/*@Service
+/*@Transactional
+/* 
 public class EntryServiceImpl implements EntryService {
 
     private final EntryRepository entryRepository;
@@ -128,4 +129,4 @@ public class EntryServiceImpl implements EntryService {
         entryRepository.deleteById(id);
     }
 
-}
+}*/

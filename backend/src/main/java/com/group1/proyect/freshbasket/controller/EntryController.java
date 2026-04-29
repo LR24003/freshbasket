@@ -1,4 +1,4 @@
-package com.group1.proyect.freshbasket.controller;
+/*package com.group1.proyect.freshbasket.controller;
 
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -82,4 +82,4 @@ public class EntryController {
         entryService.delete(id);
         return ResponseEntity.noContent().build();
     }*/
-}
+
