@@ -26,7 +26,7 @@ public class Supplier {
     private String name;
 
     // Persona de contacto (opcional, mejor que lastName)
-    @Size(max = 100)
+   @Size(max = 100)
     @NotBlank(message = "El contacto es obligatorio")
     @Column(length = 100)
     private String contact; // en la base de datos no hay un campo llamado contact

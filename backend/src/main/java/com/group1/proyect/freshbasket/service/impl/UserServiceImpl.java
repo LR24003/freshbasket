@@ -5,6 +5,7 @@ import com.group1.proyect.freshbasket.dto.response.UserResponseDTO;
 import com.group1.proyect.freshbasket.entity.User;
 import com.group1.proyect.freshbasket.repository.UserRepository;
 import com.group1.proyect.freshbasket.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +17,12 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository ) {
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // DTO → Entity
@@ -69,6 +73,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO createUser(UserRequestDTO requestDTO) {
         User user = convertToEntity(requestDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userRepository.save(user);
         return convertToDTO(savedUser);
     }
@@ -84,6 +89,7 @@ public class UserServiceImpl implements UserService {
                     existingUser.setPhone(requestDTO.getPhone());
                     existingUser.setPassword(requestDTO.getPassword());
                     existingUser.setCountryId(requestDTO.getCountryId());//
+                    existingUser.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
 
                     return userRepository.save(existingUser);
                 })
