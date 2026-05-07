@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,14 +21,16 @@ public class Entry {
     @Column(name = "id_entry")
     private Long id;
 
-    @NotBlank(message = "La Fecha es obligatoria")
+    @NotNull(message = "La Fecha es obligatoria")
     @Column(name = "entry_date", nullable = false, updatable = false)
     private LocalDateTime entryDate;
 
-    //falta agregar unit_cost
+    @NotNull(message = "El precio unitario es obligatorio")
+    @Column(name = "unit_cost", nullable = false, updatable = false)
+    public BigDecimal unitCost;
 
     @Min(1)
-    @NotBlank(message = "El valor es obligatorio")
+    @NotNull(message = "El valor es obligatorio")
     @Column(nullable = false)
     private Integer quantity;
 

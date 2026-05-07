@@ -16,7 +16,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_product") //en la base de datos es product_id
+    @Column(name = "product_id")
     private Long id;
 
     @NotBlank(message = "El nombre es obligatorio")
@@ -34,7 +34,7 @@ public class Product {
     private Integer currentStock;
 
     @Size(max = 500)
-    @NotBlank(message = "La descripcion es obligatoria")
+    @NotBlank(message = "La descripción es obligatoria")
     private String description;
 
     // Imagen del producto se guarda la url 

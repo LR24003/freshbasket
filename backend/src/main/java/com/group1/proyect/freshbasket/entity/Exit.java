@@ -1,5 +1,6 @@
 package com.group1.proyect.freshbasket.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -17,15 +18,16 @@ public class Exit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_exit") //en la base de datos yo lo deje como exit_id
+    @Column(name = "exit_id")
     private Long id;
 
     @Min(1)
-    @NotBlank(message = "El valor es obligatorio")
+    @NotNull(message = "El valor es obligatorio")
     @Column(nullable = false)
     private Integer quantity;
 
-    @NotBlank(message = "La fecha es obligatoria")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
+    @NotNull(message = "La fecha es obligatoria")
     @Column(name = "exit_date", nullable = false, updatable = false)
     private LocalDateTime exitDate;
 
@@ -43,4 +45,5 @@ public class Exit {
     protected void onCreate() {
         exitDate = LocalDateTime.now();
     }
+
 }

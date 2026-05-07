@@ -7,13 +7,14 @@ import java.util.List;
 
 public interface ExitService {
 
-    ExitResponseDTO create(ExitRequestDTO request);
+    List<ExitResponseDTO> getAllExits();
 
-    List<ExitResponseDTO> findAll();
+    ExitResponseDTO getExitById(Long id);
 
-    ExitResponseDTO findById(Long id);
+    ExitResponseDTO createExit(ExitRequestDTO requestDTO);
 
-    ExitResponseDTO update(Long id, ExitRequestDTO request);
+    ExitResponseDTO updateExit(Long id, ExitRequestDTO requestDTO);
 
-    void delete(Long id);
+    void deleteExit(Long id);
+
 }

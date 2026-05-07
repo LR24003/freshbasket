@@ -3,15 +3,15 @@ package com.group1.proyect.freshbasket.service.impl;
 import com.group1.proyect.freshbasket.dto.request.ProductRequestDTO;
 import com.group1.proyect.freshbasket.dto.response.ProductResponseDTO;
 import com.group1.proyect.freshbasket.entity.Category;
+import com.group1.proyect.freshbasket.entity.Entry;
 import com.group1.proyect.freshbasket.entity.Product;
 import com.group1.proyect.freshbasket.entity.Supplier;
-import com.group1.proyect.freshbasket.repository.CategoryRepository;
-import com.group1.proyect.freshbasket.repository.ProductRepository;
-import com.group1.proyect.freshbasket.repository.SupplierRepository;
+import com.group1.proyect.freshbasket.repository.*;
 import com.group1.proyect.freshbasket.service.ProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,13 +22,19 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final SupplierRepository supplierRepository;
+    private final UserRepository userRepository;
+    private final EntryRepository entryRepository;
 
     public ProductServiceImpl(ProductRepository productRepository,
                               CategoryRepository categoryRepository,
-                              SupplierRepository supplierRepository) {
+                              SupplierRepository supplierRepository,
+                              UserRepository userRepository,
+                              EntryRepository entryRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.supplierRepository = supplierRepository;
+        this.userRepository = userRepository;
+        this.entryRepository = entryRepository;
     }
 
     // DTO → Entity
@@ -92,10 +98,33 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + id));
     }
 
+    //Se modifico para que se inicialice el inventario si al momento de crear el producto esta en 0.
     @Override
     public ProductResponseDTO createProduct(ProductRequestDTO requestDTO) {
         Product product = convertToEntity(requestDTO);
+
+        // Inicializar stock
+        int stockInicial = requestDTO.getCurrentStock() != null ? requestDTO.getCurrentStock() : 0;
+        product.setCurrentStock(stockInicial);
+
         Product savedProduct = productRepository.save(product);
+
+        // Crear entrada automática si hay stock inicial
+        //se debe de actualizar la tabla Productos y agregar el atributo user_id
+        // de lo contrario no se registrara como una entrada y el inventario no coincidira
+        if (stockInicial > 0) {
+            Entry entry = new Entry();
+            entry.setProduct(savedProduct);
+            entry.setSupplier(savedProduct.getSupplier());
+            entry.setUser(userRepository.findById(requestDTO.getUserId())
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado")));
+            entry.setQuantity(stockInicial);
+            entry.setUnitCost(savedProduct.getPrice());
+            entry.setEntryDate(LocalDateTime.now());
+
+            entryRepository.save(entry);
+        }
+
         return convertToDTO(savedProduct);
     }
 

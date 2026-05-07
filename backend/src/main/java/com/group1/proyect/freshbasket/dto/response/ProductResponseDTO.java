@@ -1,6 +1,7 @@
 package com.group1.proyect.freshbasket.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import java.math.BigDecimal;
 @Getter
@@ -41,4 +42,7 @@ public class ProductResponseDTO {
 
     @Schema(description = "Nombre del proveedor", example = "Distribuidora El Campo")
     private String supplierName;
+
+    @Schema(description = "ID del usuario", example = "1")
+    private Long userId;
 }

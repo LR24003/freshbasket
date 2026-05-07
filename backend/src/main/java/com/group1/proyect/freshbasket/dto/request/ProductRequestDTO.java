@@ -40,4 +40,9 @@ public class ProductRequestDTO {
     @Schema(description = "ID del proveedor", example = "1")
     @NotNull(message = "El ID del proveedor es obligatorio")
     private Long supplierId;
+
+    @Schema(description = "ID del usuario", example = "1")
+    @NotNull(message = "El ID del usuario es obligatorio")
+    private Long userId;
+
 }

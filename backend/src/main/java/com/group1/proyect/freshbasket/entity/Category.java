@@ -25,7 +25,7 @@ public class Category {
     @Column(nullable = false, length = 50, unique = true)
     private String name;
 
-    @NotBlank(message = "La Descripcion es obligatoria")
+    @NotBlank(message = "La Descripción es obligatoria")
     @Size(max = 200)
     @Column(length = 200)
     private String description;

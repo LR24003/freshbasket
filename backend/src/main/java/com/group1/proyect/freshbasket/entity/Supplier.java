@@ -17,7 +17,7 @@ public class Supplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_supplier") //en la base de datos esta supplier_id
+    @Column(name = "supplier_id")
     private Long id;
 
     @NotBlank(message = "El nombre es obligatorio")
@@ -25,14 +25,13 @@ public class Supplier {
     @Column(nullable = false, length = 100)
     private String name;
 
-    // Persona de contacto (opcional, mejor que lastName)
    @Size(max = 100)
     @NotBlank(message = "El contacto es obligatorio")
     @Column(length = 100)
-    private String contact; // en la base de datos no hay un campo llamado contact
+    private String lastName;
 
     @Size(max = 15)
-    @NotBlank(message = "El telefono es obligatorio")
+    @NotBlank(message = "El teléfono es obligatorio")
     @Column(length = 15)
     private String phone;
 
