@@ -18,7 +18,7 @@ public class Entry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_entry")
+    @Column(name = "entry_id")
     private Long id;
 
     @NotNull(message = "La Fecha es obligatoria")
